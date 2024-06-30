@@ -103,6 +103,21 @@
 
     /* Completeness */
     // "skipDefaultLibCheck": true,                      /* Skip type checking .d.ts files that are included with TypeScript. */
-    "skipLibCheck": true                                 /* Skip type checking all .d.ts files. */
-  }
+    "skipLibCheck": true          ,                       /* Skip type checking all .d.ts files. */
+    "outDir": "./dist",
+    "rootDir": "./src",
+    "baseUrl": ".",  // Base directory for resolving non-relative module names
+    "paths": {
+      "@controllers/*": ["./src/controllers/*"],
+      "@routes/*": ["./src/routes/*"],
+      "@exceptions/*": ["./src/exceptions/*"],
+      "@server/*": ["./src/server/*"],
+      "@*": ["./src/*"],
+    }
+  },
+  "ts-node": {
+    "require": ["tsconfig-paths/register"]
+  },
+  "include": ["src/**/*.ts"],
+  "exclude": ["node_modules"]
 }

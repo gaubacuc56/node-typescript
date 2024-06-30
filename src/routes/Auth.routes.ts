@@ -1,17 +1,18 @@
 import { Router } from "express";
-import AuthController from "../controllers/Auth.controller";
+import AuthController from "@controllers/Auth.controller";
 
 class AuthRoutes {
-  router = Router();
-  authController = new AuthController();
+    public router = Router();
+    public authController = new AuthController();
 
-  constructor() {
-    this.intializeRoutes();
-  }
+    constructor() {
+        this.intializeRoutes();
+    }
 
-  intializeRoutes() {
-    this.router.route("/login").get(this.authController.login);
-  }
+    public intializeRoutes() {
+        this.router.route("/login").post(this.authController.login);
+        this.router.route("/signup").post(this.authController.signup);
+    }
 }
 
 export default new AuthRoutes().router;
