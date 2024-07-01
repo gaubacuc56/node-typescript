@@ -3,7 +3,6 @@ import { PrismaClient } from "@prisma/client";
 import express from "express";
 import env from "./env";
 import Server from "@server/index";
-import { errorMiddleware } from "@middlewares/error";
 
 const app = express();
 
