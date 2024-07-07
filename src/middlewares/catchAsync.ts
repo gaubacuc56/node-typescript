@@ -1,5 +1,6 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 /* eslint-disable @typescript-eslint/ban-types */
+import { COMMON_ERRORS } from "@constants/message";
 import { InternalServerErrorException } from "@exceptions/error-handler";
 import { HttpException } from "@exceptions/root";
 import { NextFunction, Response, Request } from "express";
@@ -13,7 +14,7 @@ export const catchAsync = (method: Function) => {
       if (error instanceof HttpException) {
         exception = error;
       } else {
-        exception = new InternalServerErrorException("Something went wrong");
+        exception = new InternalServerErrorException(COMMON_ERRORS.SERVER_ERROR);
       }
       next(exception);
     }
