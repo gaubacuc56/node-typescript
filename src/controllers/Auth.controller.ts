@@ -21,6 +21,7 @@ import {
   ISignUpRequest,
   IForgotPasswordRequest,
   IResetPasswordRequest,
+  IChangePasswordRequest,
 } from "@dtos/request/auth.req";
 import { transporter } from "@utils/send-mail";
 
@@ -30,7 +31,7 @@ export class AuthController {
     const user = await prismaClient.user.findFirst({ where: { email } });
     if (user == null) {
       throw new BadRequestException(AUTH_ERRORS.INVALID_CREDENTIALS);
-    } else {
+    } else {  
       const isValidPassword = compareSync(password, user.password);
       if (!isValidPassword) {
         throw new BadRequestException(AUTH_ERRORS.INVALID_CREDENTIALS);
@@ -91,7 +92,7 @@ export class AuthController {
     const resetKeyExpired = new Date(Date.now() + 60000); // expire in 1 minute
 
     await prismaClient.user.update({
-      where: { email },
+      where: { id: user.id },
       data: { resetKey, resetKeyExpired },
     });
 
@@ -135,5 +136,34 @@ export class AuthController {
       },
     });
     res.json({ message: "Password reset successful" });
+  }
+
+  public async changePassword(
+    req: RequestBody<IChangePasswordRequest>,
+    res: Response
+  ) {
+    const { email, oldPassword, newPassword } = req.body;
+    const user = await prismaClient.user.findFirst({ where: { email } });
+
+    if (!user) throw new BadRequestException(AUTH_ERRORS.USER_NOT_FOUND);
+
+    const isOldPasswordValid = compareSync(oldPassword, user.password);
+
+    if (!isOldPasswordValid) {
+      throw new BadRequestException(AUTH_ERRORS.INVALID_PASSWORD);
+    }
+
+    if (oldPassword === newPassword) {
+      throw new BadRequestException(AUTH_ERRORS.IS_OLD_PASSWORD);
+    }
+
+    await prismaClient.user.update({
+      where: { id: user.id },
+      data: {
+        password: hashSync(newPassword, 10),
+      },
+    });
+
+    res.json({ message: "Change password successful" });
   }
 }

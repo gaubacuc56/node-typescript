@@ -6,7 +6,6 @@ import {
 } from "@constants/jwt";
 import { RequestBody } from "@types";
 import { UnauthorizedException } from "@exceptions/error-handler";
-import { User } from "@prisma/client";
 import { AUTH_ERRORS } from "@constants/message";
 
 export const generateAccessToken = async (id: number) => {
@@ -35,8 +34,8 @@ const verifyToken = async (token: string, type: string) => {
     return jwt.verify(token, type) as jwt.JwtPayload;
 };
 
-export const verifyAuthorizationHeader = async (
-    req: RequestBody<User>,
+export const verifyAuthorizationHeader = async <T> (
+    req: RequestBody<T>,
     tokenSecret: string
 ) => {
     const authorization = req.header("authorization");

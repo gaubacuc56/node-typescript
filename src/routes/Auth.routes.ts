@@ -24,11 +24,14 @@ class AuthRoutes {
             .route("/refresh-token")
             .post(catchAsync(this.authController.refreshToken));
         this.router
-          .route("/forgot-password")
-          .post(catchAsync(this.authController.forgotPassword));
+            .route("/forgot-password")
+            .post(catchAsync(this.authController.forgotPassword));
         this.router
-          .route("/reset-password")
-          .post(catchAsync(this.authController.resetPassword));
+            .route("/reset-password")
+            .post(catchAsync(this.authController.resetPassword));
+        this.router
+          .route("/change-password")
+          .put(catchAsync(this.authController.changePassword));
     }
 }
 
