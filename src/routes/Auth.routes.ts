@@ -1,5 +1,5 @@
 import { Router } from "express";
-import AuthController from "@controllers/Auth.controller";
+import { AuthController } from "@controllers/auth.controller";
 import { catchAsync } from "@middlewares/catchAsync";
 import { authMiddleware } from "@middlewares/auth";
 class AuthRoutes {
@@ -23,6 +23,12 @@ class AuthRoutes {
         this.router
             .route("/refresh-token")
             .post(catchAsync(this.authController.refreshToken));
+        this.router
+          .route("/forgot-password")
+          .post(catchAsync(this.authController.forgotPassword));
+        this.router
+          .route("/reset-password")
+          .post(catchAsync(this.authController.resetPassword));
     }
 }
 
