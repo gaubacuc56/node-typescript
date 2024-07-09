@@ -31,7 +31,7 @@ export class AuthController {
     const user = await prismaClient.user.findFirst({ where: { email } });
     if (user == null) {
       throw new BadRequestException(AUTH_ERRORS.INVALID_CREDENTIALS);
-    } else {  
+    } else {
       const isValidPassword = compareSync(password, user.password);
       if (!isValidPassword) {
         throw new BadRequestException(AUTH_ERRORS.INVALID_CREDENTIALS);
@@ -138,16 +138,14 @@ export class AuthController {
     res.json({ message: "Password reset successful" });
   }
 
+  //TODO: not working
   public async changePassword(
-    req: RequestBody<IChangePasswordRequest>,
+    req: RequestBody<IChangePasswordRequest & User>,
     res: Response
   ) {
-    const { email, oldPassword, newPassword } = req.body;
-    const user = await prismaClient.user.findFirst({ where: { email } });
+    const { id, password, oldPassword, newPassword } = req.body;
 
-    if (!user) throw new BadRequestException(AUTH_ERRORS.USER_NOT_FOUND);
-
-    const isOldPasswordValid = compareSync(oldPassword, user.password);
+    const isOldPasswordValid = compareSync(oldPassword, password);
 
     if (!isOldPasswordValid) {
       throw new BadRequestException(AUTH_ERRORS.INVALID_PASSWORD);
@@ -158,7 +156,7 @@ export class AuthController {
     }
 
     await prismaClient.user.update({
-      where: { id: user.id },
+      where: { id: id },
       data: {
         password: hashSync(newPassword, 10),
       },

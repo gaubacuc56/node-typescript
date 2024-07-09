@@ -31,7 +31,7 @@ class AuthRoutes {
             .post(catchAsync(this.authController.resetPassword));
         this.router
           .route("/change-password")
-          .put(catchAsync(this.authController.changePassword));
+          .put([authMiddleware],catchAsync(this.authController.changePassword));
     }
 }
 

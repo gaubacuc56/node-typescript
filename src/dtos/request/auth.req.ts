@@ -19,7 +19,6 @@ export interface IResetPasswordRequest {
 }
 
 export interface IChangePasswordRequest {
-  email: string;
   oldPassword: string;
   newPassword: string;
 }
