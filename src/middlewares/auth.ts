@@ -1,4 +1,3 @@
-/* eslint-disable @typescript-eslint/no-explicit-any */
 import { NextFunction, Response } from "express";
 import { User } from "@prisma/client";
 import { prismaClient } from "@app";
@@ -8,8 +7,12 @@ import { UnauthorizedException } from "@exceptions/error-handler";
 import { RequestBody } from "@types";
 import { verifyAuthorizationHeader } from "@utils/jwt";
 
-export const authMiddleware = async (
-    req: RequestBody<User>,
+interface IReAuthRequest<T> extends RequestBody<T> {
+    body: T & User;
+}
+
+export const authMiddleware = async <T>(
+    req: IReAuthRequest<T>,
     res: Response,
     next: NextFunction
 ) => {
@@ -19,7 +22,7 @@ export const authMiddleware = async (
             where: { id: payload.userId },
         });
         if (!user) next();
-        else req.body = user;
+        else req.body = { ...req.body, ...user };
         next();
     } catch (error) {
         next(new UnauthorizedException(AUTH_ERRORS.INVALID_TOKEN));
