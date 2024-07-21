@@ -108,12 +108,12 @@
     "rootDir": "./src",
     "baseUrl": ".",  // Base directory for resolving non-relative module names
     "paths": {
-/*       "@controllers/*": ["./src/controllers/*"],
+      "@controllers/*": ["./src/controllers/*"],
       "@routes/*": ["./src/routes/*"],
       "@exceptions/*": ["./src/exceptions/*"],
       "@server/*": ["./src/server/*"],
       "@dtos/request/*": ["./src/dtos/request/*"],
-      "@dtos/response/*": ["./src/dtos/response/*"], */
+      "@dtos/response/*": ["./src/dtos/response/*"],
       "@*": ["./src/*"],
     }
   },
