@@ -97,7 +97,7 @@ export class AuthController {
             data: { resetKey, resetKeyExpired },
         });
 
-        const resetUrl = `http://localhost:6868/auth/reset-password?resetKey=${resetKey}`;
+        const resetUrl = `http://localhost:5173/auth/reset-password?resetKey=${resetKey}`;
 
         await transporter.sendMail({
             from: '"Toan" <thaitoan3039015@gmail.com>', // sender address
