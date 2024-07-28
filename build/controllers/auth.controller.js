@@ -79,7 +79,7 @@ class AuthController {
                 where: { id: user.id },
                 data: { resetKey, resetKeyExpired },
             });
-            const resetUrl = `http://localhost:6868/auth/reset-password?resetKey=${resetKey}`;
+            const resetUrl = `http://localhost:5173/auth/reset-password?resetKey=${resetKey}`;
             yield send_mail_1.transporter.sendMail({
                 from: '"Toan" <thaitoan3039015@gmail.com>', // sender address
                 to: email, // list of receivers
