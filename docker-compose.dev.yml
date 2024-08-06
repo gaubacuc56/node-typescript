@@ -1,0 +1,9 @@
+version: "1"
+
+services:
+  app:
+    container_name: node-ts-dev
+    image: node-ts-dev
+    env_file:
+      - .env.development
+    command: npm run dev

@@ -1,0 +1,9 @@
+version: "1"
+
+services:
+  app:
+    container_name: node-ts-prod
+    image: node-ts-prod
+    env_file:
+      - .env.production
+    command: npm start
