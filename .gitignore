@@ -1,6 +1,6 @@
 node_modules
 key
-build
+build/
 .env.production
 .env.development
 .env.local

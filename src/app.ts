@@ -14,7 +14,7 @@ export const prismaClient = new PrismaClient({
 
 app
   .listen(config.PORT as number, function () {
-    console.info(`Server running on : http://localhost:${config.PORT}`);
+    console.info(`Local is running on http://localhost:8000`);
   })
   .on("error", (err: any) => {
     if (err.code === "EADDRINUSE") {
