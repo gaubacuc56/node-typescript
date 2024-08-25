@@ -3,5 +3,3 @@ version: "1"
 services:
   app:
     image: be-dev
-    env_file:
-      - .env.development

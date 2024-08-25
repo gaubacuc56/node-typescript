@@ -3,5 +3,3 @@ version: "1"
 services:
   app:
     image: be-prod
-    env_file:
-      - .env.production
