@@ -69,6 +69,9 @@ jobs:
             # Log in to Amazon ECR
             aws ecr get-login-password --region ${{ secrets.AWS_REGION }} | docker login --username AWS --password-stdin ${{ secrets.ECR_REGISTRY }}
 
+            # Stop all running containers
+            docker ps -q | xargs -r docker stop
+            
             # Pull the latest Docker image from ECR
             docker pull ${{ secrets.ECR_REGISTRY }}/${{ secrets.ECR_REPOSITORY }}:latest
 
