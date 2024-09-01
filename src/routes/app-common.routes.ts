@@ -1,19 +1,21 @@
 import { Router } from "express";
 import { AppCommonController } from "@controllers/app-common.controller";
-import { catchAsync } from "@middlewares/catchAsync";
+import { AsyncRoute } from "@middlewares/catchAsync";
 
-class AppCommonRoutes {
+class AppCommonRoutes extends AsyncRoute {
   public router = Router();
-  public appCommonController = new AppCommonController();
+  private appCommonController: AppCommonController;
 
   constructor() {
+    super();
+    this.appCommonController = this.CatchAsync(new AppCommonController());
     this.intializeRoutes();
   }
 
-  public intializeRoutes() {
+  private intializeRoutes() {
     this.router
       .route("/health-check")
-      .get(catchAsync(this.appCommonController.healthCheck));
+      .get(this.appCommonController.healthCheck);
   }
 }
 
