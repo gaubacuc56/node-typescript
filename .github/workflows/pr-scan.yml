@@ -1,0 +1,47 @@
+name: Pull Request Scanning
+
+on:
+  pull_request:
+    branches:
+      - main
+      # - other branches will be list here.
+
+jobs:
+  build-and-test:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v3
+
+      - name: Set up Node.js
+        uses: actions/setup-node@v3
+        with:
+          node-version: "20" # Specify the Node.js version you are using
+
+      - name: Install dependencies
+        run: npm install
+
+      - name: Run lint
+        run: npm run lint
+
+      - name: Run tests
+        run: npm test
+
+      - name: Build project
+        run: npm run build
+
+      # Add any additional steps here like security checks, code coverage, etc.
+
+      - name: Upload code coverage report
+        if: success() # Upload report only if tests pass
+        uses: actions/upload-artifact@v3
+        with:
+          name: coverage-report
+          path: ./coverage
+
+      - name: Notify on failure
+        if: failure()
+        uses: some-notification-action@v1
+        with:
+          message: "Pull request check failed. Please review the results and make necessary changes."
