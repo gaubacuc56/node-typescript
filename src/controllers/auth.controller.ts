@@ -26,7 +26,7 @@ import {
 import { transporter } from "@utils/send-mail";
 
 export class AuthController {
-  public async login(req: RequestBody<ILoginRequest>, res: Response) {
+  public async login(req: RequestBody<any>, res: Response) {
     const { email, password } = req.body;
     const user = await prismaClient.user.findFirst({ where: { email } });
     if (user == null) {
