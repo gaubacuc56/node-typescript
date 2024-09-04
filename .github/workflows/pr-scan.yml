@@ -8,6 +8,7 @@ on:
 
 jobs:
   build-and-test:
+    name: Scan PR
     runs-on: ubuntu-latest
 
     steps:
