@@ -11,7 +11,7 @@ new Server(app);
 export const prismaClient = new PrismaClient({
   log: ["query"],
 });
-console.
+
 app
   .listen(config.PORT as number, function () {
     console.info(`Local is running on http://localhost:8000`);
