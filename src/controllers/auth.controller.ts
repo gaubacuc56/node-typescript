@@ -16,6 +16,7 @@ import {
 } from "@utils/jwt";
 import { config } from "@config";
 import { AUTH_ERRORS } from "@constants/message";
+import { transporter } from "@utils/send-mail";
 import {
   ILoginRequest,
   ISignUpRequest,
@@ -23,10 +24,9 @@ import {
   IResetPasswordRequest,
   IChangePasswordRequest,
 } from "@dtos/request/auth.req";
-import { transporter } from "@utils/send-mail";
 
 export class AuthController {
-  public async login(req: RequestBody<any>, res: Response) {
+  public async login(req: RequestBody<ILoginRequest>, res: Response) {
     const { email, password } = req.body;
     const user = await prismaClient.user.findFirst({ where: { email } });
     if (user == null) {
